@@ -21,6 +21,13 @@
   background-color: yellow;
 }
 
+.display-sentence{
+  margin-top : 5em;
+  margin-bottom : 0em;
+  position: relative;
+  text-align: center; 
+}
+
 .keyboard-container {
   margin-top: 200px;
 }
