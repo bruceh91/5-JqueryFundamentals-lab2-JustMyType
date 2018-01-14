@@ -1,16 +1,16 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-
+//hides uppercasek keyboard when page loads
     $('#keyboard-upper-container').hide();
 
-
+//changes keyboard to uppercase when shift is pressed
     $(window).keydown(function (e) {
         if (e.keyCode === 16) {
             $('#keyboard-upper-container').show();
             $('#keyboard-lower-container').hide();
         }
     })
-
+// changes bacl to lowercase when shift is released
     $(window).keyup(function (e) {
         if (e.keyCode === 16) {
             $('#keyboard-upper-container').hide();
@@ -20,51 +20,21 @@ document.addEventListener("DOMContentLoaded", function () {
     })
 
 
-
-    $(window).keypress(function (e) {
+// highlights keys when pressed
+    $(window).keypress(function (e) {                          
         let code = e.which;
         $('#' + e.which).addClass('highlight');
+    //removes highlight                            //doesn't unhighlight non-letter characters
         $(window).keyup(function (e) {
             let lowerCase = e.which + 32
         $('#' + e.which).removeClass('highlight');
         $('#' + lowerCase).removeClass('highlight');
+        })
         
     })
-           
-    })
+    
 
 })
-
-
-//     $(window).keyup(function (e) {
-//         let code = "'#" + e.keyCode + "'"
-//         $(code).removeClass('highlight');
-//         console.log(code);
-
-// })
-
-//     var code = e.keyCode || e.which;
-//  if(code == 13)
-
-//     $(window).keydown(function (e) {
-//         code = "'"+ e.which +"'"
-//             $(code).addClass('highlight');
-//     })
-
-//     $(window).keydown(function (e) {
-//         if (e.keyCode === 97) {
-//             $('#97').addClass('highlight');
-//         }
-//     })
-
-
-
-    // let release = $(window).keyup
-
-    // function highlight(press, release) {
-    //     let x = press + (function (e))
-    // }
-
 
 
 
