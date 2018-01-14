@@ -40,29 +40,56 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //puts first sentence on screen
     $('#sentence').prepend('<p class="sentence">' + sentences[0] + '</p>');
+    //puts first target letter on screen
+    $('#target-letter').prepend('t');
 
-    let sentenceCount = 1;    //increments when keystrokes are greater than the number of chars in the sentnece.
-    let currentSentence = 0;  //shows current sentence number 
-    let strokeCount = 0       //counts the number of key strokes by incrementing with every key press.
+    //increments when keystrokes are greater than the number of chars in the sentnece.
+    let sentenceCount = 0;    
+    //shows current sentence number 
+    let currentSentence = 0;  
+    //counts the number of key strokes by incrementing with every key press.
+    let strokeCount = 0;  
+    //current position of yellow box
+    let pxCount = 0;
+    //value of next sentence to be displayed
+    let nextDisplaySentence = 1;
 
     $(window).keypress(function () {
+        //var for current sentence
         currentSentence = sentences[sentenceCount];
+        //var for the length of current sentence
         let sentenceLength = currentSentence.length;
+        //value of the next letter you need to type
+        let letter = currentSentence.charAt(strokeCount + 1);
         if (strokeCount <= sentenceLength) {
-            console.log(strokeCount);     // will be where the highlighting function goes later
-            console.log(sentenceCount);
+            //increases pxCount by the size of one letter
+            pxCount += 17;
+            // moves the yellow box one letter to the right
+            $('#yellow-block').css('margin-left', pxCount);
+            //generates letters in middle of screen
+            $('#target-letter').replaceWith('<div class="row col-lg-12 text-center" id="target-letter">' + letter + '</div>');
         } else if (currentSentence > sentences.length) {
             return ""         ///function to return score will go here
         } else {
-            $('.sentence').replaceWith('<p class="sentence">' + currentSentence + '</p>');//replaces old sentence with new one
+            //placeholder for next sentence to be displayed
+            tempVal = sentences[nextDisplaySentence];
+            //replaces old sentence with new one
+            $('.sentence').replaceWith('<p class="sentence">' + tempVal + '</p>');
+            //increments when keystrokes are greater than the number of chars in the sentnece.
             sentenceCount++;
-            strokeCount = 0;//reset keystroke for each new sentence
+            //reset keystroke for each new sentence
+            strokeCount = 0;
+            // reset the position of yellow box
+            pxCount = 0;
+            //increment value of next sentence to be displayed
+            nextDisplaySentence ++;
         }
+        //increment the number of key strokes by incrementing with every key press.
         strokeCount++;
 
     })
 
-
+    ////////////////// ///////////////// ///////////////// ////////////////// ///////////////////
 
 
 
