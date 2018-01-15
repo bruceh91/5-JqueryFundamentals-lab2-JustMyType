@@ -41,36 +41,49 @@ document.addEventListener("DOMContentLoaded", function () {
     //puts first sentence on screen
     $('#sentence').prepend('<p class="sentence">' + sentences[0] + '</p>');
     //puts first target letter on screen
-    $('#target-letter').prepend('t');
+    $('#target-letter').prepend(sentences[0].charAt(0));
 
     //increments when keystrokes are greater than the number of chars in the sentnece.
     let sentenceCount = 0;    
     //shows current sentence number 
     let currentSentence = 0;  
     //counts the number of key strokes by incrementing with every key press.
-    let strokeCount = 0;  
+    let strokeCount = 1;  
     //current position of yellow box
     let pxCount = 0;
     //value of next sentence to be displayed
     let nextDisplaySentence = 1;
 
-    $(window).keypress(function () {
+
+    $(window).keypress(function (event) {
         //var for current sentence
         currentSentence = sentences[sentenceCount];
         //var for the length of current sentence
         let sentenceLength = currentSentence.length;
         //value of the next letter you need to type
-        let letter = currentSentence.charAt(strokeCount + 1);
-        if (strokeCount <= sentenceLength) {
+        let letter = currentSentence.charAt(strokeCount);
+        
+        if (strokeCount < sentenceLength) {
             //increases pxCount by the size of one letter
-            pxCount += 17;
+            pxCount += .71;
             // moves the yellow box one letter to the right
-            $('#yellow-block').css('margin-left', pxCount);
+            $('#yellow-block').css('margin-left', pxCount+'em');
+
             //generates letters in middle of screen
             $('#target-letter').replaceWith('<div class="row col-lg-12 text-center" id="target-letter">' + letter + '</div>');
+
+            //checks if key pressed matches key needed
+            if (currentSentence.charCodeAt(strokeCount -1) == event.keyCode) {
+                console.log('yes');
+            } else {
+                console.log('no')
+            }
+
+
+        
         } else if (currentSentence > sentences.length) {
             return ""         ///function to return score will go here
-        } else {
+        } else if (strokeCount == sentenceLength){
             //placeholder for next sentence to be displayed
             tempVal = sentences[nextDisplaySentence];
             //replaces old sentence with new one
@@ -80,14 +93,21 @@ document.addEventListener("DOMContentLoaded", function () {
             //reset keystroke for each new sentence
             strokeCount = 0;
             // reset the position of yellow box
+            $('#yellow-block').css('margin-left', '0em');
             pxCount = 0;
             //increment value of next sentence to be displayed
             nextDisplaySentence ++;
+
+            // tempValue = strokeCount;
+            $('#target-letter').replaceWith('<div class="row col-lg-12 text-center" id="target-letter">'+ tempVal.charAt(0) + '</div.>');
         }
         //increment the number of key strokes by incrementing with every key press.
         strokeCount++;
 
     })
+
+
+
 
     ////////////////// ///////////////// ///////////////// ////////////////// ///////////////////
 
