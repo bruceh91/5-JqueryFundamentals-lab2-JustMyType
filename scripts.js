@@ -44,15 +44,20 @@ document.addEventListener("DOMContentLoaded", function () {
     $('#target-letter').prepend(sentences[0].charAt(0));
 
     //increments when keystrokes are greater than the number of chars in the sentnece.
-    let sentenceCount = 0;    
+    let sentenceCount = 0;
     //shows current sentence number 
-    let currentSentence = 0;  
+    let currentSentence = 0;
     //counts the number of key strokes by incrementing with every key press.
-    let strokeCount = 1;  
+    let strokeCount = 1;
     //current position of yellow box
     let pxCount = 0;
     //value of next sentence to be displayed
     let nextDisplaySentence = 1;
+
+
+    var right = 'checkMark.svg';
+    var wrong = 'xMark.png'
+    
 
 
     $(window).keypress(function (event) {
@@ -62,32 +67,41 @@ document.addEventListener("DOMContentLoaded", function () {
         let sentenceLength = currentSentence.length;
         //value of the next letter you need to type
         let letter = currentSentence.charAt(strokeCount);
-        
+
         if (strokeCount < sentenceLength) {
             //increases pxCount by the size of one letter
-            pxCount += .71;
+            pxCount += .72;
             // moves the yellow box one letter to the right
-            $('#yellow-block').css('margin-left', pxCount+'em');
+            $('#yellow-block').css('margin-left', pxCount + 'em');
 
             //generates letters in middle of screen
             $('#target-letter').replaceWith('<div class="row col-lg-12 text-center" id="target-letter">' + letter + '</div>');
 
             //checks if key pressed matches key needed
-            if (currentSentence.charCodeAt(strokeCount -1) == event.keyCode) {
-                console.log('yes');
+            if (currentSentence.charCodeAt(strokeCount - 1) == event.keyCode) {
+                //adds check if correct
+                $('#feedback').append('<img class="correct" src=' + right + '>');
+                //styles check
+                $(".correct").css({
+                    'height': '20px',
+                    'width': '20px',
+                })
             } else {
-                console.log('no')
+                //adds red x if incorrect
+                $('#feedback').append('<img class="incorrect" src=' + wrong + '>');
+                //styles red x
+                $(".incorrect").css({
+                    'height': '15px',
+                    'width': '15px',
+                })
             }
-
-
-        
         } else if (currentSentence > sentences.length) {
             return ""         ///function to return score will go here
-        } else if (strokeCount == sentenceLength){
+        } else if (strokeCount >= sentenceLength) {
             //placeholder for next sentence to be displayed
-            tempVal = sentences[nextDisplaySentence];
+            nextSentence = sentences[nextDisplaySentence];
             //replaces old sentence with new one
-            $('.sentence').replaceWith('<p class="sentence">' + tempVal + '</p>');
+            $('.sentence').replaceWith('<p class="sentence">' + nextSentence + '</p>');
             //increments when keystrokes are greater than the number of chars in the sentnece.
             sentenceCount++;
             //reset keystroke for each new sentence
@@ -96,10 +110,12 @@ document.addEventListener("DOMContentLoaded", function () {
             $('#yellow-block').css('margin-left', '0em');
             pxCount = 0;
             //increment value of next sentence to be displayed
-            nextDisplaySentence ++;
-
-            // tempValue = strokeCount;
-            $('#target-letter').replaceWith('<div class="row col-lg-12 text-center" id="target-letter">'+ tempVal.charAt(0) + '</div.>');
+            nextDisplaySentence++;
+            // nextSentenceue = strokeCount;
+            $('#target-letter').replaceWith('<div class="row col-lg-12 text-center" id="target-letter">' + nextSentence.charAt(0) + '</div.>');
+            //removes previous checks and red xs from screen
+            $('.correct').remove();
+            $('.incorrect').remove();
         }
         //increment the number of key strokes by incrementing with every key press.
         strokeCount++;
@@ -109,7 +125,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-    ////////////////// ///////////////// ///////////////// ////////////////// ///////////////////
 
 
 
