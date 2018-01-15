@@ -17,6 +17,11 @@
   background-color: yellow;
 }
 
+#btn {
+  display : hide;
+}
+
+
 .highlight {
   background-color: yellow;
 }
