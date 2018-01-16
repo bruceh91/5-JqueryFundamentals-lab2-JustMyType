@@ -26,6 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
         //removes highlight                   
         $(window).keyup(function (e) {
             $('span').removeClass('highlight');
+            $('#32').removeClass('highlight')
         })
 
     })
